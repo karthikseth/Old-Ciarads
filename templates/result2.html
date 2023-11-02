@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    <p><strong>Patient Name:</strong> {{ patient_name }}</p>
+    <p><strong>Patient Age:</strong> {{ age }}</p>
+    <p><strong>Registration ID:</strong> {{ registration_id }}</p>
+    <p><strong>Doctor Name:</strong> {{ doctor_name }}</p>
+    <p><strong>Image Type:</strong> {{ image_type }}</p>
+    <p><strong>Result:</strong> {{ prediction }}</p>
+</body>
+</html>

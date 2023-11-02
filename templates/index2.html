@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CiARADS score</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .form-container {
+            text-align: center;
+        }
+        #logo {
+            width: 200px; /* Set the width of the logo as per your preference */
+            height: auto; /* Maintain the aspect ratio of the logo */
+        }
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-group label {
+            width: 150px; /* Set a fixed width for the labels */
+            text-align: left;
+            margin-right: 20px; /* Add some spacing between label and input */
+        }
+        .form-group input,
+        .form-group select {
+            width: 200px; /* Set a width for the input/select boxes */
+        }
+        #uploaded-image {
+            width: 90px;
+            height: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <img id="logo" src="C:\Users\karth\OneDrive\Desktop\Cidaras\logos\jipmer.jpeg" alt="Logo">
+        <h1>CiARADS score (Colposcopic image-processing with Artificial-Intelligence Recording and Data System score)</h1>
+        <form method="post" action="/predict" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="patient_name">Patient Name:</label>
+                <input type="text" id="patient_name" name="patient_name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="text" id="age" name="age" required>
+                <p id="age-error-message" style="color: red;"></p>
+            </div>
+            <div class="form-group">
+                <label for="registration_id">Registration ID:</label>
+                <input type="text" id="registration_id" name="registration_id" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor_name">Doctor Name:</label>
+                <input type="text" id="doctor_name" name="doctor_name" required>
+            </div>
+            <div class="form-group">
+                <label for="image_type">Image Type:</label>
+                <select id="image_type" name="image_type">
+                    <option value="" disabled selected>Select Image Type</option>
+                    <option value="acetic_acid">Acetic Acid</option>
+                    <option value="lugols_iodine">Lugol's Iodine</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+                <p>Allowed format - .jpg .jpeg .png</p>
+            </div>
+            <input type="submit" value="Predict">
+        </form>
+
+        <!-- Display uploaded image -->
+        <h2>Uploaded Image:</h2>
+        <img id="uploaded-image" src="" alt="Uploaded Image">
+    </div>
+
+    <script>
+        // JavaScript to display the uploaded image
+        const input = document.querySelector('input[type="file"]');
+        const image = document.getElementById('uploaded-image');
+
+        input.addEventListener('change', function () {
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                image.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                image.src = "";
+            }
+        });
+    </script>
+
+<script>
+    const ageInput = document.getElementById('age');
+    const ageErrorMessage = document.getElementById('age-error-message');
+
+    ageInput.addEventListener('input', function () {
+        const ageValue = ageInput.value;
+        // Use regular expression to check if the input is a valid number
+        const isValidAge = /^[0-9]*$/.test(ageValue);
+
+        if (!isValidAge) {
+            ageErrorMessage.textContent = 'Age must contain only numbers.';
+            ageInput.setCustomValidity('Invalid');
+        } else {
+            ageErrorMessage.textContent = '';
+            ageInput.setCustomValidity('');
+        }
+    });
+</script>
+
+<script>
+    const imageTypeSelect = document.getElementById('image_type');
+    const imageInput = document.getElementById('image');
+
+    imageTypeSelect.addEventListener('change', function () {
+        if (imageTypeSelect.value === "") {
+            imageInput.setAttribute('disabled', true);
+        } else {
+            imageInput.removeAttribute('disabled');
+        }
+    });
+</script>
+
+</body>
+</html>
